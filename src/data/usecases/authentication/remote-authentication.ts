@@ -3,22 +3,22 @@ import { InvalidCredentialsError } from '@/domain/erros/invalid-credentials-erro
 import { UnexpectedError } from '@/domain/erros/unexpected-credentials-error'
 import { AccountModel } from '@/domain/models/account-model'
 import { HttpPostClient } from 'data/protocols/http/http-post-client'
-import { AuthenticationParams } from 'domain/usecases/authentication'
+import { Authentication, AuthenticationParams } from 'domain/usecases/authentication'
 
-export class RemoteAuthentication {
+export class RemoteAuthentication implements Authentication {
   constructor (
     private readonly url: string,
     private readonly httpPostClient: HttpPostClient<AuthenticationParams, AccountModel>
   ) {}
 
-  async auth (params: AuthenticationParams): Promise<void> {
+  async auth (params: AuthenticationParams): Promise<AccountModel> {
     const httpResponse = await this.httpPostClient.post({
       url: this.url,
       body: params
     })
 
     switch (httpResponse.statusCode) {
-      case HttpStatusCode.ok: break
+      case HttpStatusCode.ok: return httpResponse.body
       case HttpStatusCode.unathourized: throw new InvalidCredentialsError()
       default: throw new UnexpectedError()
     }
