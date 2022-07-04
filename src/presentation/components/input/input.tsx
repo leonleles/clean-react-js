@@ -10,7 +10,7 @@ HTMLInputElement
 const Input: React.FC<Props> = (props: Props) => {
   return (
     <div className={Styles.inputWrap}>
-      <input {...props} />
+      <input {...props} autoComplete="off"/>
       <span className={Styles.status} />
     </div>
   )
