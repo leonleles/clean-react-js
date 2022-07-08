@@ -1,13 +1,12 @@
-import { AuthenticationParams } from 'domain/usecases'
+import { AuthenticationParams } from '@/domain/usecases'
 import { AccountModel } from '../models'
-
-import { internet, datatype } from 'faker'
+import faker from 'faker'
 
 export const mockAuthentication = (): AuthenticationParams => ({
-  email: internet.email(),
-  password: internet.password()
+  email: faker.internet.email(),
+  password: faker.internet.password()
 })
 
 export const mockAccountModel = (): AccountModel => ({
-  accessToken: datatype.uuid()
+  accessToken: faker.random.uuid()
 })

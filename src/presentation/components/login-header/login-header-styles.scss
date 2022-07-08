@@ -3,8 +3,8 @@
 .header {
   display: flex;
   flex-direction: column;
-  background-color: $primary;
   border-top: 40px solid $primaryDark;
+  background-color: $primary;
   align-items: center;
 
   img {
@@ -13,6 +13,6 @@
 
   h1 {
     color: $white;
-    margin: 16px 0 40px;
+    margin: 16px 0px 40px;
   }
 }
