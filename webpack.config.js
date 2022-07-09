@@ -35,7 +35,7 @@ module.exports = {
     }]
   },
   devServer: {
-    contentBase: './public',
+    contentBase: path.join(__dirname, 'public'),
     writeToDisk: true,
     historyApiFallback: true
   },
