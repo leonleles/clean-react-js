@@ -1,5 +1,5 @@
 const path = require('path')
-const {DefinePlugin} = require('webpack')
+const { DefinePlugin } = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
