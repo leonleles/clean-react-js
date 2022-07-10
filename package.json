@@ -11,7 +11,8 @@
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
     "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
-    "check": "npm-check -u -s"
+    "check": "npm-check -u -s",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@testing-library/react": "^13.3.0",
