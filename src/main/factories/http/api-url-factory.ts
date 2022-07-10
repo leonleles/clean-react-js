@@ -1,3 +1,3 @@
-export const makeApiURL = (): string => {
-  return 'http://fordevs.herokuapp.com/api/login'
+export const makeApiURL = (path: string): string => {
+  return `http://fordevs.herokuapp.com/api${path}`
 }
