@@ -36,8 +36,10 @@ module.exports = {
     }]
   },
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
-    writeToDisk: true,
+    static: path.join(__dirname, 'public'),
+    devMiddleware: {
+      writeToDisk: true,
+    },
     historyApiFallback: true
   },
   externals: {
@@ -47,7 +49,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new DefinePlugin({
-      'process.env.API_URL': 'http://fordevs.herokuapp.com/api'
+      'process.env.API_URL': JSON.stringify('http://fordevs.herokuapp.com/api')
     })
   ]
 }

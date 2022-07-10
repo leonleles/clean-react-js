@@ -5,6 +5,6 @@ import '@/presentation/styles/global.scss'
 import { makeLogin } from './factories/pages/login/login-factory'
 
 ReactDOM.render(
-  <Router makeLogin={makeLogin} />,
+  <Router MakeLogin={makeLogin} />,
   document.getElementById('main')
 )

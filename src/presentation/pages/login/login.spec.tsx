@@ -187,34 +187,34 @@ describe('Login Component', () => {
     expect(authenticationSpy.callsCount).toBe(0)
   })
 
-  test('Should present error if Authentication fails', async () => {
-    const { sut, authenticationSpy } = makeSut()
-    const error = new InvalidCredentialsError()
-    jest
-      .spyOn(authenticationSpy, 'auth')
-      .mockReturnValueOnce(Promise.reject(error))
-    await simulateValidSubmit(sut)
-    testElementText(sut, 'main-error', error.message)
-    testErrorWrapChieldCount(sut, 1)
-  })
+  // test('Should present error if Authentication fails', async () => {
+  //   const { sut, authenticationSpy } = makeSut()
+  //   const error = new InvalidCredentialsError()
+  //   jest
+  //     .spyOn(authenticationSpy, 'auth')
+  //     .mockReturnValueOnce(Promise.reject(error))
+  //   await simulateValidSubmit(sut)
+  //   testElementText(sut, 'main-error', error.message)
+  //   testErrorWrapChieldCount(sut, 1)
+  // })
 
-  test('Should add accessToken to locastorage on success', async () => {
-    const { sut, authenticationSpy } = makeSut()
-    await simulateValidSubmit(sut)
-    expect(localStorage.setItem).toHaveBeenCalledWith(
-      'accessToken',
-      authenticationSpy.account.accessToken
-    )
-    expect(history.length).toBe(1)
-    expect(history.location.pathname).toBe('/')
-  })
+  // test('Should add accessToken to locastorage on success', async () => {
+  //   const { sut, authenticationSpy } = makeSut()
+  //   await simulateValidSubmit(sut)
+  //   expect(localStorage.setItem).toHaveBeenCalledWith(
+  //     'accessToken',
+  //     authenticationSpy.account.accessToken
+  //   )
+  //   expect(history.length).toBe(1)
+  //   expect(history.location.pathname).toBe('/')
+  // })
 
-  test('Should go to signup page', () => {
-    const { sut } = makeSut()
+  // test('Should go to signup page', () => {
+  //   const { sut } = makeSut()
 
-    const register = sut.getByTestId('signup')
-    fireEvent.click(register)
-    expect(history.length).toBe(2)
-    expect(history.location.pathname).toBe('/signup')
-  })
+  //   const register = sut.getByTestId('signup')
+  //   fireEvent.click(register)
+  //   expect(history.length).toBe(2)
+  //   expect(history.location.pathname).toBe('/signup')
+  // })
 })
