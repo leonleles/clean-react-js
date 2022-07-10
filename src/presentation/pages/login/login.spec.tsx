@@ -17,11 +17,11 @@ import { Login } from '@/presentation/pages'
 type SutTypes = {
   sut: RenderResult
   authenticationSpy: AuthenticationSpy
-};
+}
 
 type SutParams = {
   validationError: string
-};
+}
 
 const history = createMemoryHistory({
   initialEntries: ['/login']
@@ -32,7 +32,7 @@ const makeSut = (params?: SutParams): SutTypes => {
   const authenticationSpy = new AuthenticationSpy()
   validationStub.errorMessage = params?.validationError
   const sut = render(
-    <Router history={history}>
+    <Router location="/login" navigator={history}>
       <Login validation={validationStub} authentication={authenticationSpy} />
     </Router>
   )
