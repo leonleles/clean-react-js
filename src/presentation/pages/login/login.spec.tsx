@@ -1,3 +1,4 @@
+// import { InvalidCredentialsError } from '@/domain/errors'
 import { Login } from '@/presentation/pages'
 // import { AuthenticationSpy, ValidationStub } from '@/domain/errors'
 import { AuthenticationSpy, ValidationStub } from '@/presentation/test/'
@@ -190,6 +191,17 @@ describe('Login Component', () => {
   //   const error = new InvalidCredentialsError()
   //   jest
   //     .spyOn(authenticationSpy, 'auth')
+  //     .mockReturnValueOnce(Promise.reject(error))
+  //   await simulateValidSubmit(sut)
+  //   testElementText(sut, 'main-error', error.message)
+  //   testErrorWrapChieldCount(sut, 1)
+  // })
+
+  // test('Should present error if SaveAccessToken fails', async () => {
+  //   const { sut, saveAccessTokenMock } = makeSut()
+  //   const error = new InvalidCredentialsError()
+  //   jest
+  //     .spyOn(saveAccessTokenMock, 'save')
   //     .mockReturnValueOnce(Promise.reject(error))
   //   await simulateValidSubmit(sut)
   //   testElementText(sut, 'main-error', error.message)
