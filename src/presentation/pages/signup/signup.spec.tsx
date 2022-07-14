@@ -23,11 +23,6 @@ const makeSut = (params?: SutParams): SutStypes => {
   }
 }
 
-const testElementExists = (sut: RenderResult, fieldName: string): void => {
-  const element = sut.getByTestId(fieldName)
-  expect(element).toBeTruthy()
-}
-
 const simulateValidSubmit = async (
   sut: RenderResult,
   name = faker.name.findName(),
@@ -121,6 +116,6 @@ describe('SignUp Component', () => {
   test('Should show spinner on submit', async () => {
     const { sut } = makeSut()
     await simulateValidSubmit(sut)
-    testElementExists(sut, 'spinner')
+    FormHelper.testElementExists(sut, 'spinner')
   })
 })
