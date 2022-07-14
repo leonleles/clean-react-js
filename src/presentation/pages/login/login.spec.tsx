@@ -1,6 +1,5 @@
-// import { InvalidCredentialsError } from '@/domain/errors'
+import { InvalidCredentialsError } from '@/domain/errors'
 import { Login } from '@/presentation/pages'
-// import { AuthenticationSpy, ValidationStub } from '@/domain/errors'
 import { AuthenticationSpy, ValidationStub, FormHelper } from '@/presentation/test'
 import { SaveAccessTokenMock } from '@/presentation/test/mock-save-access-token'
 import { cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
@@ -56,14 +55,14 @@ const simulateValidSubmit = async (
   await waitFor(() => form)
 }
 
-// const testElementText = (
-//   sut: RenderResult,
-//   fieldName: string,
-//   text: string
-// ): void => {
-//   const element = sut.getByTestId(fieldName)
-//   expect(element.textContent).toBe(text)
-// }
+const testElementText = (
+  sut: RenderResult,
+  fieldName: string,
+  text: string
+): void => {
+  const element = sut.getByTestId(fieldName)
+  expect(element.textContent).toBe(text)
+}
 
 describe('Login Component', () => {
   afterEach(cleanup)
@@ -141,27 +140,27 @@ describe('Login Component', () => {
     expect(authenticationSpy.callsCount).toBe(0)
   })
 
-  // test('Should present error if Authentication fails', async () => {
-  //   const { sut, authenticationSpy } = makeSut()
-  //   const error = new InvalidCredentialsError()
-  //   jest
-  //     .spyOn(authenticationSpy, 'auth')
-  //     .mockReturnValueOnce(Promise.reject(error))
-  //   await simulateValidSubmit(sut)
-  //   testElementText(sut, 'main-error', error.message)
-  //   testErrorWrapChieldCount(sut, 1)
-  // })
+  test('Should present error if Authentication fails', async () => {
+    const { sut, authenticationSpy } = makeSut()
+    const error = new InvalidCredentialsError()
+    jest
+      .spyOn(authenticationSpy, 'auth')
+      .mockReturnValueOnce(Promise.reject(error))
+    await simulateValidSubmit(sut)
+    await waitFor(() => testElementText(sut, 'main-error', error.message))
+    FormHelper.testChildCount(sut,'error-wrap', 1)
+  })
 
-  // test('Should present error if SaveAccessToken fails', async () => {
-  //   const { sut, saveAccessTokenMock } = makeSut()
-  //   const error = new InvalidCredentialsError()
-  //   jest
-  //     .spyOn(saveAccessTokenMock, 'save')
-  //     .mockReturnValueOnce(Promise.reject(error))
-  //   await simulateValidSubmit(sut)
-  //   testElementText(sut, 'main-error', error.message)
-  //   testErrorWrapChieldCount(sut, 1)
-  // })
+  test('Should present error if SaveAccessToken fails', async () => {
+    const { sut, saveAccessTokenMock } = makeSut()
+    const error = new InvalidCredentialsError()
+    jest
+      .spyOn(saveAccessTokenMock, 'save')
+      .mockReturnValueOnce(Promise.reject(error))
+    await simulateValidSubmit(sut)
+    await waitFor(() => testElementText(sut, 'main-error', error.message))
+    FormHelper.testChildCount(sut,'error-wrap', 1)
+  })
 
   test('Should call SaveAccessToken on success', async () => {
     const { sut, authenticationSpy, saveAccessTokenMock } = makeSut()
