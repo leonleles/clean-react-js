@@ -1,6 +1,6 @@
 import { InvalidCredentialsError } from '@/domain/errors'
 import { Login } from '@/presentation/pages'
-import { AuthenticationSpy, ValidationStub, FormHelper } from '@/presentation/test'
+import { AuthenticationSpy, FormHelper, ValidationStub } from '@/presentation/test'
 import { SaveAccessTokenMock } from '@/presentation/test/mock-save-access-token'
 import { cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
 import faker from 'faker'
