@@ -1,18 +1,18 @@
-const wp = require("@cypress/webpack-preprocessor");
+const wp = require('@cypress/webpack-preprocessor')
 
 module.exports = wp({
   webpackOptions: {
     resolve: {
-      extensions: [".ts", ".js"],
+      extensions: ['.ts', '.js']
     },
     module: {
       rules: [
         {
           test: /\.ts$/,
-          exclude: "/node_modules/",
-          loader: "ts-loader",
-        },
-      ],
-    },
-  },
-});
+          exclude: '/node_modules/',
+          loader: 'ts-loader'
+        }
+      ]
+    }
+  }
+})
