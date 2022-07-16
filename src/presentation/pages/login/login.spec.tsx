@@ -147,7 +147,7 @@ describe('Login Component', () => {
     const error = new InvalidCredentialsError()
     jest
       .spyOn(saveAccessTokenMock, 'save')
-      .mockReturnValueOnce(Promise.reject(error))
+      .mockRejectedValueOnce(error)
     await simulateValidSubmit(sut)
     await waitFor(() => FormHelper.testElementText(sut, 'main-error', error.message))
     FormHelper.testChildCount(sut,'error-wrap', 1)
@@ -157,16 +157,14 @@ describe('Login Component', () => {
     const { sut, authenticationSpy, saveAccessTokenMock } = makeSut()
     await simulateValidSubmit(sut)
     expect(saveAccessTokenMock.accessToken).toBe(authenticationSpy.account.accessToken)
-    // expect(history.length).toBe(1)
-    // expect(history.location.pathname).toBe('/')
+    expect(history.location.pathname).toBe('/')
   })
 
-  // test('Should go to signup page', () => {
-  //   const { sut } = makeSut()
+  test('Should go to signup page', () => {
+    const { sut } = makeSut()
 
-  //   const register = sut.getByTestId('signup')
-  //   fireEvent.click(register)
-  //   expect(history.length).toBe(2)
-  //   expect(history.location.pathname).toBe('/signup')
-  // })
+    const register = sut.getByTestId('signup')
+    fireEvent.click(register)
+    expect(history.location.pathname).toBe('/signup')
+  })
 })
