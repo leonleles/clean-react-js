@@ -8,9 +8,9 @@ import { Link , useNavigate } from 'react-router-dom'
 import Styles from './signup-styles.scss'
 
 interface SignUpProps {
-  validation?: Validation
-  addAccount?: AddAccount
-  saveAccessToken?: SaveAccessToken
+  validation: Validation
+  addAccount: AddAccount
+  saveAccessToken: SaveAccessToken
 }
 
 const SignUp: React.FC<SignUpProps> = ({ validation, addAccount, saveAccessToken }: SignUpProps) => {
