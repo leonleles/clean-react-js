@@ -19,86 +19,9 @@ const SurveyList: React.FC = () => {
               <ul>
                 <li>
                   <div className={Styles.surveyContent}>
-                   <time>
-                     <span className={Styles.day}>22</span>
-                     <span className={Styles.month}>03</span>
-                     <span className={Styles.year}>2022</span>
-                   </time>
-                   <p>Qual é seu framework web favorito?</p>
-                  </div>
-                  <footer>Ver resultado</footer>
-                </li><li>
-                  <div className={Styles.surveyContent}>
-                   <time>
-                     <span className={Styles.day}>22</span>
-                     <span className={Styles.month}>03</span>
-                     <span className={Styles.year}>2022</span>
-                   </time>
-                   <p>Qual é seu framework web favorito?</p>
-                  </div>
-                  <footer>Ver resultado</footer>
-                </li><li>
-                  <div className={Styles.surveyContent}>
-                   <time>
-                     <span className={Styles.day}>22</span>
-                     <span className={Styles.month}>03</span>
-                     <span className={Styles.year}>2022</span>
-                   </time>
-                   <p>Qual é seu framework web favorito?</p>
-                  </div>
-                  <footer>Ver resultado</footer>
-                </li><li>
-                  <div className={Styles.surveyContent}>
-                   <time>
-                     <span className={Styles.day}>22</span>
-                     <span className={Styles.month}>03</span>
-                     <span className={Styles.year}>2022</span>
-                   </time>
-                   <p>Qual é seu framework web favorito?</p>
-                  </div>
-                  <footer>Ver resultado</footer>
-                </li><li>
-                  <div className={Styles.surveyContent}>
-                   <time>
-                     <span className={Styles.day}>22</span>
-                     <span className={Styles.month}>03</span>
-                     <span className={Styles.year}>2022</span>
-                   </time>
-                   <p>Qual é seu framework web favorito?</p>
-                  </div>
-                  <footer>Ver resultado</footer>
-                </li><li>
-                  <div className={Styles.surveyContent}>
-                   <time>
-                     <span className={Styles.day}>22</span>
-                     <span className={Styles.month}>03</span>
-                     <span className={Styles.year}>2022</span>
-                   </time>
-                   <p>Qual é seu framework web favorito?</p>
-                  </div>
-                  <footer>Ver resultado</footer>
-                </li><li>
-                  <div className={Styles.surveyContent}>
-                   <time>
-                     <span className={Styles.day}>22</span>
-                     <span className={Styles.month}>03</span>
-                     <span className={Styles.year}>2022</span>
-                   </time>
-                   <p>Qual é seu framework web favorito?</p>
-                  </div>
-                  <footer>Ver resultado</footer>
-                </li><li>
-                  <div className={Styles.surveyContent}>
-                   <time>
-                     <span className={Styles.day}>22</span>
-                     <span className={Styles.month}>03</span>
-                     <span className={Styles.year}>2022</span>
-                   </time>
-                   <p>Qual é seu framework web favorito?</p>
-                  </div>
-                  <footer>Ver resultado</footer>
-                </li><li>
-                  <div className={Styles.surveyContent}>
+                    <div className={[Styles.iconWrap, Styles.green].join(' ')}>
+                    <img className={Styles.icon} src="/img/icon-thumb-down.png" />
+                    </div>
                    <time>
                      <span className={Styles.day}>22</span>
                      <span className={Styles.month}>03</span>
