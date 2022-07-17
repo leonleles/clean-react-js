@@ -7,7 +7,6 @@ export class RemoteAddAccount implements AddAccount {
   constructor (
     private readonly url: string,
     private readonly httpPostClient: HttpPostClient<
-    AddAccountParams,
     AccountModel
     >
   ) {}
