@@ -31,7 +31,7 @@
       justify-content: space-between;
 
       li {
-        height: 250px;
+        min-height: 250px;
         background-color: $white;
         display: flex;
         flex-direction: column;
@@ -97,6 +97,7 @@
             font-size: 18px;
             margin: 24px;
             align-self: center;
+            flex-grow: 1;
           }
         }
         footer {
@@ -111,6 +112,19 @@
           &:hover {
             background-color: $primaryDark;
           }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .surveyListWrap {
+    .contentWrap {
+      ul {
+        flex-direction: column;
+        li {
+          flex-basis: 100%;
         }
       }
     }
