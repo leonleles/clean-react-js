@@ -1,13 +1,10 @@
 import { SurveyList } from '@/presentation/pages'
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { MakeLogin } from '../factories/pages/login/login-factory'
+import { MakeSignUp } from '../factories/pages/signup/signup-factory'
 
-type Factory = {
-  MakeLogin: React.FC
-  MakeSignUp: React.FC
-}
-
-const Router: React.FC<Factory> = ({ MakeLogin, MakeSignUp }: Factory) => {
+const Router: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
