@@ -1,10 +1,10 @@
-import { HttpStatusCode } from '@/data/protocols/http'
-import { HttpPostClientSpy } from '@/data/test'
-import { EmailInUseError, UnexpectedError } from '@/domain/errors'
-import { AccountModel } from '@/domain/models'
-import { mockAccountModel, mockAddAccountParams } from '@/domain/test'
-import faker from 'faker'
 import { RemoteAddAccount } from './remote-add-account'
+import { HttpPostClientSpy } from '@/data/test'
+import { HttpStatusCode } from '@/data/protocols/http'
+import { mockAddAccountParams, mockAccountModel } from '@/domain/test'
+import { AccountModel } from '@/domain/models'
+import { EmailInUseError, UnexpectedError } from '@/domain/errors'
+import faker from 'faker'
 
 type SutTypes = {
   sut: RemoteAddAccount
@@ -12,9 +12,7 @@ type SutTypes = {
 }
 
 const makeSut = (url: string = faker.internet.url()): SutTypes => {
-  const httpPostClientSpy = new HttpPostClientSpy<
-  AccountModel
-  >()
+  const httpPostClientSpy = new HttpPostClientSpy<AccountModel>()
   const sut = new RemoteAddAccount(url, httpPostClientSpy)
   return {
     sut,

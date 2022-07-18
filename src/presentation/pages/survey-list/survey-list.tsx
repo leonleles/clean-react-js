@@ -1,6 +1,6 @@
-import { Footer, Header, Icon, IconName } from '@/presentation/components'
 import React from 'react'
 import Styles from './survey-list-styles.scss'
+import { Header, Footer, Icon, IconName } from '@/presentation/components'
 
 const SurveyList: React.FC = () => {
   return (
@@ -15,11 +15,11 @@ const SurveyList: React.FC = () => {
               <time>
                 <span className={Styles.day}>22</span>
                 <span className={Styles.month}>03</span>
-                <span className={Styles.year}>2022</span>
+                <span className={Styles.year}>2020</span>
               </time>
               <p>Qual é seu framework web favorito?</p>
             </div>
-            <footer>Ver resultado</footer>
+            <footer>Ver Resultado</footer>
           </li>
           <li></li>
           <li></li>

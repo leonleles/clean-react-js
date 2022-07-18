@@ -1,25 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import Styles from './login-styles.scss'
-import {
-  Footer,
-  Input,
-  LoginHeader,
-  FormStatus,
-  SubmitButton
-} from '@/presentation/components'
-import Context from '@/presentation/contexts/form/form-context'
-import { Validation } from '@/presentation/protocols/validation'
-import { Authentication, SaveAccessToken } from '@/domain/usecases'
 import { Link, useNavigate } from 'react-router-dom'
+import Styles from './login-styles.scss'
+import { Footer, Input, LoginHeader, FormStatus, SubmitButton } from '@/presentation/components'
+import { FormContext } from '@/presentation/contexts'
+import { Validation } from '@/presentation/protocols'
+import { Authentication, UpdateCurrentAccount } from '@/domain/usecases'
 
 type Props = {
   validation: Validation
   authentication: Authentication
-  saveAccessToken: SaveAccessToken
+  updateCurrentAccount: UpdateCurrentAccount
 }
 
-const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }: Props) => {
-  const history = useNavigate()
+const Login: React.FC<Props> = ({ validation, authentication, updateCurrentAccount }: Props) => {
+  const navigate = useNavigate()
   const [state, setState] = useState({
     isLoading: false,
     isFormInvalid: true,
@@ -32,12 +26,9 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
 
   useEffect(() => {
     const { email, password } = state
-    const formData = {
-      email,password
-    }
+    const formData = { email, password }
     const emailError = validation.validate('email', formData)
     const passwordError = validation.validate('password', formData)
-
     setState({
       ...state,
       emailError,
@@ -46,9 +37,7 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
     })
   }, [state.email, state.password])
 
-  const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
     try {
       if (state.isLoading || state.isFormInvalid) {
@@ -59,9 +48,8 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
         email: state.email,
         password: state.password
       })
-
-      await saveAccessToken.save(account.accessToken)
-      history('/')
+      await updateCurrentAccount.save(account)
+      navigate('/')
     } catch (error) {
       setState({
         ...state,
@@ -74,24 +62,16 @@ const Login: React.FC<Props> = ({ validation, authentication, saveAccessToken }:
   return (
     <div className={Styles.loginWrap}>
       <LoginHeader />
-      <Context.Provider value={{ state, setState }}>
-        <form
-          data-testid="form"
-          className={Styles.form}
-          onSubmit={handleSubmit}
-        >
+      <FormContext.Provider value={ { state, setState }}>
+        <form data-testid="form" className={Styles.form} onSubmit={handleSubmit}>
           <h2>Login</h2>
           <Input type="email" name="email" placeholder="Digite seu e-mail" />
-          <Input
-            type="password"
-            name="password"
-            placeholder="Digite sua senha"
-          />
-          <SubmitButton text="Entrar"/>
+          <Input type="password" name="password" placeholder="Digite sua senha" />
+          <SubmitButton text="Entrar" />
           <Link data-testid="signup-link" to="/signup" className={Styles.link}>Criar conta</Link>
           <FormStatus />
         </form>
-      </Context.Provider>
+      </FormContext.Provider>
       <Footer />
     </div>
   )

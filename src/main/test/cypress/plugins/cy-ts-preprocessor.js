@@ -6,13 +6,11 @@ module.exports = wp({
       extensions: ['.ts', '.js']
     },
     module: {
-      rules: [
-        {
-          test: /\.ts$/,
-          exclude: '/node_modules/',
-          loader: 'ts-loader'
-        }
-      ]
+      rules: [{
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        loader: 'ts-loader'
+      }]
     }
   }
 })

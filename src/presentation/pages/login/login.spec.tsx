@@ -1,55 +1,47 @@
-import { InvalidCredentialsError } from '@/domain/errors'
-import { Login } from '@/presentation/pages'
-import { AuthenticationSpy, FormHelper, ValidationStub } from '@/presentation/test'
-import { SaveAccessTokenMock } from '@/presentation/test/mock-save-access-token'
-import { cleanup, fireEvent, render, RenderResult, waitFor } from '@testing-library/react'
-import faker from 'faker'
-import { createMemoryHistory } from 'history'
 import React from 'react'
 import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
+import faker from 'faker'
+import { render, RenderResult, fireEvent, cleanup, waitFor } from '@testing-library/react'
+import { Login } from '@/presentation/pages'
+import { ValidationStub, AuthenticationSpy, UpdateCurrentAccountMock, FormHelper } from '@/presentation/test'
+import { InvalidCredentialsError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RenderResult
   authenticationSpy: AuthenticationSpy
-  saveAccessTokenMock: SaveAccessTokenMock
+  updateCurrentAccountMock: UpdateCurrentAccountMock
 }
 
 type SutParams = {
   validationError: string
 }
 
-const history = createMemoryHistory({
-  initialEntries: ['/login']
-})
-
+const history = createMemoryHistory({ initialEntries: ['/login'] })
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
-  const authenticationSpy = new AuthenticationSpy()
-  const saveAccessTokenMock = new SaveAccessTokenMock()
   validationStub.errorMessage = params?.validationError
+  const authenticationSpy = new AuthenticationSpy()
+  const updateCurrentAccountMock = new UpdateCurrentAccountMock()
   const sut = render(
     <Router location="/login" navigator={history}>
       <Login
-      validation={validationStub}
-      authentication={authenticationSpy}
-      saveAccessToken={saveAccessTokenMock}
-       />
+        validation={validationStub}
+        authentication={authenticationSpy}
+        updateCurrentAccount={updateCurrentAccountMock}
+      />
     </Router>
   )
   return {
     sut,
     authenticationSpy,
-    saveAccessTokenMock
+    updateCurrentAccountMock
   }
 }
 
-const simulateValidSubmit = async (
-  sut: RenderResult,
-  email = faker.internet.email(),
-  password = faker.internet.password()
-): Promise<void> => {
-  FormHelper.populateField(sut,'email', email)
-  FormHelper.populateField(sut,'password', password)
+const simulateValidSubmit = async (sut: RenderResult, email = faker.internet.email(), password = faker.internet.password()): Promise<void> => {
+  FormHelper.populateField(sut, 'email', email)
+  FormHelper.populateField(sut, 'password', password)
   const form = sut.getByTestId('form')
   fireEvent.submit(form)
   await waitFor(() => form)
@@ -61,7 +53,7 @@ describe('Login Component', () => {
   test('Should start with initial state', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
-    FormHelper.testChildCount(sut,'error-wrap', 0)
+    FormHelper.testChildCount(sut, 'error-wrap', 0)
     FormHelper.testButtonIsDisabled(sut, 'submit', true)
     FormHelper.testStatusForField(sut, 'email', validationError)
     FormHelper.testStatusForField(sut, 'password', validationError)
@@ -70,33 +62,33 @@ describe('Login Component', () => {
   test('Should show email error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
-    FormHelper.populateField(sut,'email')
+    FormHelper.populateField(sut, 'email')
     FormHelper.testStatusForField(sut, 'email', validationError)
   })
 
   test('Should show password error if Validation fails', () => {
     const validationError = faker.random.words()
     const { sut } = makeSut({ validationError })
-    FormHelper.populateField(sut,'password')
+    FormHelper.populateField(sut, 'password')
     FormHelper.testStatusForField(sut, 'password', validationError)
   })
 
   test('Should show valid email state if Validation succeeds', () => {
     const { sut } = makeSut()
-    FormHelper.populateField(sut,'email')
+    FormHelper.populateField(sut, 'email')
     FormHelper.testStatusForField(sut, 'email')
   })
 
   test('Should show valid password state if Validation succeeds', () => {
     const { sut } = makeSut()
-    FormHelper.populateField(sut,'password')
+    FormHelper.populateField(sut, 'password')
     FormHelper.testStatusForField(sut, 'password')
   })
 
   test('Should enable submit button if form is valid', () => {
     const { sut } = makeSut()
-    FormHelper.populateField(sut,'email')
-    FormHelper.populateField(sut,'password')
+    FormHelper.populateField(sut, 'email')
+    FormHelper.populateField(sut, 'password')
     FormHelper.testButtonIsDisabled(sut, 'submit', false)
   })
 
@@ -111,10 +103,7 @@ describe('Login Component', () => {
     const email = faker.internet.email()
     const password = faker.internet.password()
     await simulateValidSubmit(sut, email, password)
-    expect(authenticationSpy.params).toEqual({
-      email,
-      password
-    })
+    expect(authenticationSpy.params).toEqual({ email, password })
   })
 
   test('Should call Authentication only once', async () => {
@@ -142,27 +131,22 @@ describe('Login Component', () => {
     FormHelper.testChildCount(sut,'error-wrap', 1)
   })
 
-  test('Should present error if SaveAccessToken fails', async () => {
-    const { sut, saveAccessTokenMock } = makeSut()
-    const error = new InvalidCredentialsError()
-    jest
-      .spyOn(saveAccessTokenMock, 'save')
-      .mockRejectedValueOnce(error)
+  test('Should call SaveAccessToken on success', async () => {
+    const { sut, authenticationSpy, updateCurrentAccountMock } = makeSut()
     await simulateValidSubmit(sut)
-    await waitFor(() => FormHelper.testElementText(sut, 'main-error', error.message))
-    FormHelper.testChildCount(sut,'error-wrap', 1)
+    expect(updateCurrentAccountMock.account).toEqual(authenticationSpy.account)
+    expect(history.location.pathname).toBe('/')
   })
 
   test('Should call SaveAccessToken on success', async () => {
-    const { sut, authenticationSpy, saveAccessTokenMock } = makeSut()
+    const { sut, authenticationSpy, updateCurrentAccountMock } = makeSut()
     await simulateValidSubmit(sut)
-    expect(saveAccessTokenMock.accessToken).toBe(authenticationSpy.account.accessToken)
+    expect(updateCurrentAccountMock.account).toEqual(authenticationSpy.account)
     expect(history.location.pathname).toBe('/')
   })
 
   test('Should go to signup page', () => {
     const { sut } = makeSut()
-
     const register = sut.getByTestId('signup-link')
     fireEvent.click(register)
     expect(history.location.pathname).toBe('/signup')

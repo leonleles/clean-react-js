@@ -6,6 +6,9 @@ import { makeLogin } from './factories/pages/login/login-factory'
 import { makeSignUp } from './factories/pages/signup/signup-factory'
 
 ReactDOM.render(
-  <Router MakeLogin={makeLogin} MakeSignUp={makeSignUp} />,
+  <Router
+    MakeLogin={makeLogin}
+    MakeSignUp={makeSignUp}
+  />,
   document.getElementById('main')
 )

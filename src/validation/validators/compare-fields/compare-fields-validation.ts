@@ -1,5 +1,5 @@
+import { FieldValidation } from '@/validation/protocols'
 import { InvalidFieldError } from '@/validation/errors'
-import { FieldValidation } from '../../protocols/field-validation'
 
 export class CompareFieldsValidation implements FieldValidation {
   constructor (

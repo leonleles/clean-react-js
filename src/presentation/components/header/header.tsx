@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
-import { Logo } from '@/presentation/components'
 import Styles from './header-styles.scss'
+import { Logo } from '@/presentation/components'
 
 const Header: React.FC = () => {
   return (
@@ -9,7 +9,7 @@ const Header: React.FC = () => {
         <Logo />
         <div className={Styles.logoutWrap}>
           <span>Rodrigo</span>
-          <a href="#">sair</a>
+          <a href="#">Sair</a>
         </div>
       </div>
     </header>
