@@ -29,9 +29,8 @@ describe('PrivateRoute', () => {
     expect(history.location.pathname).toBe('/login')
   })
 
-//   test('Should render current component if token is not empty', () => {
-//     const { history } = makeSut()
-//     console.log(history)
-//     expect(history.location.pathname).toBe('/')
-//   })
+  test('Should render current component if token is not empty', () => {
+    const { history } = makeSut()
+    expect(history.location.pathname).toBe('/')
+  })
 })
